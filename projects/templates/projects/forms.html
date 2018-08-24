@@ -1,0 +1,102 @@
+{% extends "projects/test.html" %}
+
+{% block javascript %}
+
+<form action="{% url 'create_post:create_projects' %}" method="POST" enctype="multipart/form-data">
+  
+    {% csrf_token %}  
+
+    {% for hidden in project_form.hidden_fields %}
+    {{ hidden }}
+    {% endfor %}
+
+    {% for field in project_form %}
+    {{ field.errors }}
+    {{ field }} <br />
+    {% endfor %}
+
+    <input type="submit" value="OK">
+    
+{% load static %}
+
+{# JQUERY FILE UPLOAD SCRIPTS #}
+<script src="{% static 'projects/js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
+<script src="{% static 'projects/js/jquery-file-upload/jquery.iframe-transport.js' %}"></script>
+<script src="{% static 'projects/js/jquery-file-upload/jquery.fileupload.js' %}"></script>
+
+{# PHOTOS PAGE SCRIPTS #}
+<script src="{% static 'projects/js/basic-upload.js' %}"></script>
+
+{# 1. BUTTON TO TRIGGER THE ACTION #}
+<button type="button" class="btn btn-primary js-upload-photos">
+  <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
+</button>
+
+{# 2. FILE INPUT TO BE USED BY THE PLUG-IN #}
+<input id="fileupload" type="file" name="p_file" multiple
+       style="display: none;"
+       data-url="{% url 'create_post:create_projects' %}"
+       data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+
+{# 3. TABLE TO DISPLAY THE UPLOADED PHOTOS #}
+<table id="gallery" class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Photo</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p_photo in p_photos %}
+      <tr>
+        <td><a href="{{ p_photo.file.url }}">{{ p_photo.file.name }}</a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+    <h1>hahahaha</h1>
+
+</form>
+
+{% endblock %}
+
+<!--<form action="" method="POST" enctype="multipart/form-data">
+    {% load static %}
+
+{# JQUERY FILE UPLOAD SCRIPTS #}
+<script src="{% static 'projects/js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
+<script src="{% static 'projects/js/jquery-file-upload/jquery.iframe-transport.js' %}"></script>
+<script src="{% static 'projects/js/jquery-file-upload/jquery.fileupload.js' %}"></script>
+
+{# PHOTOS PAGE SCRIPTS #}
+<script src="{% static 'projects/js/basic-upload.js' %}"></script>
+
+{# 1. BUTTON TO TRIGGER THE ACTION #}
+<button type="button" class="btn btn-primary js-upload-photos">
+  <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
+</button>
+
+{# 2. FILE INPUT TO BE USED BY THE PLUG-IN #}
+<input id="fileupload" type="file" name="p_file" multiple
+       style="display: none;"
+       data-url="{% url 'create_post:create_projects' %}"
+       data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+
+{# 3. TABLE TO DISPLAY THE UPLOADED PHOTOS #}
+<table id="gallery" class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Photo</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p_photo in p_photos %}
+      <tr>
+        <td><a href="{{ p_photo.file.url }}">{{ p_photo.file.name }}</a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+    <h1>hahahaha</h1>
+</form>-->

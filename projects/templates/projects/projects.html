@@ -1,0 +1,11 @@
+<h1>asdasdasdasdasdasdas</h1>
+{% if projects_list %}
+<ul>
+    {% for project in projects_list %}
+    <h2><a href="{% url 'create_post:details_of_project' project.slug %}">{{project.title}}</a></h2>
+    <h2>{{project.description}}</h2>
+    <h2>{{ project.publish_date }}</h2>
+    
+    {% endfor %}
+</ul>
+{% endif %}
